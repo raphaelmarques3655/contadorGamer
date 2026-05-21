@@ -14,7 +14,7 @@ import { View,
 
 //Componente principal APP
 
-export default function Jogador1(){
+export default function Jogador2(){
 
   // Cria uma estado (variavel php) chamado "pontos"
   // pontos = valor atual
@@ -34,9 +34,6 @@ export default function Jogador1(){
   function diminuir(){
     //pega o valor atual e subtrai -1
     setPontos(pontos-1);
-    if(pontos <= 0){
-      setPontos(0)
-    }
   }
 
     //função para resetar o contador
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
     // OCUPA A TELA TODA
     flex: 1,
     // COR DE FUNDO
-    backgroundColor: '#121212',
+    backgroundColor: '#18c223ff',
     //CENTRALIZA HORIZONTALMENTE
     alignItems: 'center',
     // CENTRALIZA VERTICALMENTE
