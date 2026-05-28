@@ -1,305 +1,249 @@
 //Importa o React e o useState
-//useState serve para valores que podem mudar na tela
-import React, { useState } from "react";
+//useState serve para criar valores que podem mudar na tela
+import React, { useEffect, useState } from "react";
 
-import { experimental_LayoutConformance } from "react-native";
 //Importa os componentes do React Native
 import {
-  View, // caixa / área da tela onde colocamos os outros componentes
-  Text, // textos
-  Button,// botão
-  StyleSheet,// estilos
-  TouchableOpacity// botão customizável
+    View, //Área de tela
+    Text, //Texto
+    Button, //Botão
+    StyleSheet, //Estilos
+    TouchableOpacity, //Botão customizável
+    TextInput //Campo de texto
 } from "react-native-web";
 
-//componente principal do app
+//Componente principal do app
 export default function Jogador2() {
-  //cria uma estado (variavel php) chamada pontos
-  //pontos = valor atual
-  //setPontos = função para atualizar o valor de pontos
-  //0 = valor inicial de pontos
-  const [pontos, setPontos] = useState(0);
-  //função para aumentar 1 ponto
-  function aumentar() {
-    //pega o valor atual e aumenta 1 ponto e atualiza o valor de pontos
-    setPontos0(pontos + 1);
-  }
+    //Cria a estado (variavel) pontos e a função setPontos para alterar o valor
+    //0 é o valor inicial
+    const [pontos1, setPontos1] = useState(0);
+    const [pontos2, setPontos2] = useState(0);
+    const [nome1, setNome1] = useState("Jogador 1");
+    const [nome2, setNome2] = useState("Jogador 2");
+    const [lider, setLider] = useState("Empate");
 
-  //função para diminuir 1 ponto
+    //Executar alguma ação automaticamente
+    //quando algo mudar
+    //nesse caso:
+        //toda vez que os pontos / nomes mudarem
+        //o código dentro do useEffect é executado
+    useEffect(() => {
+        if(pontos1 > pontos2){
+            setLider(nome1);
+        }else if(pontos2 > pontos1){
+            setLider(nome2);
+        }else{
+            setLider("Empate");
+        }
+    }, [pontos1, pontos2, nome1, nome2]);
+    //dependências que disparam o useEffect quando mudam    
 
-  function diminuir() {
-    //pega o valor atual e diminui 1 ponto e atualiza o valor de pontos
-    setPontos0(pontos - 1);
-    if (pontos <= 0) {
-      setPontos0(0);
+    //Função para aumentar 1 ponto
+    function aumentar1() {
+        //pega o valor atual e soma +1
+        setPontos1(pontos1 + 1);
     }
-  }
-  //função para resetar os pontos
-
-  function resetar() {
-    //atualiza o valor de pontos para 0
-    setPontos(0);
-  }
-  
-
-  const [numeros, setNumeros] = useState(0);
-  //função para aumentar 1 ponto
-  function aumentar() {
-    //pega o valor atual e aumenta 1 ponto e atualiza o valor de pontos
-    setNumeros(numeros + 1);
-  }
-  //função para diminuir 1 ponto
-
-  function diminuir() {
-    //pega o valor atual e diminui 1 ponto e atualiza o valor de pontos
-    setNumeros(numeros - 1);
-    if (numeros <= 0) {
-      setNumeros(0);
+    function aumentar2() {
+        //pega o valor atual e soma +1
+        setPontos2(pontos2 + 1);
     }
-  }
-  //função para resetar os pontos
+    //Função para diminuir 1 ponto
+    function diminuir1() {
+        //pega o valor atual e subtrai -1
+        if(pontos1 > 0){
+            setPontos1(pontos1 - 1);
+        }
+    }
+    function diminuir2() {
+        //pega o valor atual e subtrai -1
+        if(pontos2 > 0){
+            setPontos2(pontos2 - 1);
+    }
+    }
+    //Função para resetar o contador
+    function reset() {
+        //volta o valor para 0
+        setPontos1(0);
+        setPontos2(0);
+        setLider("Empate");
+    }
 
-  function resetar() {
-    //atualiza o valor de pontos para 0
-    setNumeros(0);
-  }
-  // tudo que esta no RETURN aparece na tela do app
-  return (
-    // View principal do APP, igual a uma div no HTML, serve para organizar os outros componentes
-    <View style={styles.container}>
-      {/* // Título do app */}
-      <Text style={styles.titulo}>
-        🎮 Jogador 1
-      </Text>
-      {/* Mostra o valor atual de pontos */}
-      <Text style={styles.pontos}>{pontos}
-        {/* área dos botões +1 e -1 */}
-      </Text>
-      <View style={styles.areaBotoes}>
-        <TouchableOpacity onPress={aumentar} style={styles.botao}>
-          <Text style={styles.textoBotao}>+1</Text>
-        </TouchableOpacity>
+    //Tudo que está no return é o que aparece na tela
+    return (
+        //View principal do app
+        <View style={styles.container}>
+            {/* Título do App */}
+            <Text style={styles.titulo}>
+                🎮 Contador Gamer - Modo 2 Jogadores
+            </Text>
+            
+            <Text style={styles.lider}>
+                🏆  Lider: {lider}  🏆
+            </Text>
 
-
-        <TouchableOpacity onPress={diminuir} style={styles.botao}>
-          <Text style={styles.textoBotao}>-1</Text>
-        </TouchableOpacity>
-
-
-      </View>
-      <View style={styles.areaBotoes}>
-        <TouchableOpacity onPress={resetar} style={styles.botaoReset}>
-          <Text style={styles.textoBotao}>Resetar</Text>
-        </TouchableOpacity>
-      </View>
-  
-      <view style={{marginTop: 1}}>
-       <Text style={styles.titulo}>
-        🎮 Jogador 2
-      </Text>
-      {/* Mostra o valor atual de pontos */}
-      <Text style={styles.numeros}>{numeros}
-        {/* área dos botões +1 e -1 */}
-      </Text>
-      <View style={styles.areaBotoes2}>
-        <TouchableOpacity onPress={aumentar} style={styles.botao}>
-          <Text style={styles.textoBotao}>+1</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity onPress={diminuir} style={styles.botao}>
-          <Text style={styles.textoBotao}>-1</Text>
-        </TouchableOpacity>
-
-
-      </View>
-      <View style={styles.areaBotoes}>
-        <TouchableOpacity onPress={resetar} style={styles.botaoReset}>
-          <Text style={styles.textoBotao}>Resetar</Text>
-        </TouchableOpacity>
-      </View>
-      </view>
-
-    </View>
-  );
+            {/* Area dos Jogadores */}
+            <View style={styles.areaJogadores}>
+                {/* Jogador 1 */}
+                <View style={styles.areaJogador}>
+                    <TextInput
+                        style={styles.input} 
+                        placeholder="Nome do Jogador 1"
+                        placeholderTextColor="#999"
+                        value={nome1}
+                        onChangeText={setNome1}
+                    />
+                    <Text style={styles.nome}>{nome1}</Text>
+                    {/* Mostra o valor atual dos pontos */}
+                    <Text style={styles.pontos}>{pontos1}</Text>
+                    {/* Área dos botões */}
+                    <View style={styles.areaBotoes}>
+                        <TouchableOpacity onPress={aumentar1} style={styles.botao}>
+                            <Text style={styles.textoBotao}>+1</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={diminuir1} style={styles.botao}>
+                            <Text style={styles.textoBotao}>-1</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                {/* Jogador 2 */}
+                <View style={styles.areaJogador}>
+                    <TextInput
+                        style={styles.input} 
+                        placeholder="Nome do Jogador 2"
+                        placeholderTextColor="#999"
+                        value={nome2}
+                        onChangeText={setNome2}
+                    />
+                    <Text style={styles.nome}>{nome2}</Text>
+                    {/* Mostra o valor atual dos pontos */}
+                    <Text style={styles.pontos}>{pontos2}</Text>
+                    {/* Área dos botões */}
+                    <View style={styles.areaBotoes}>
+                        <TouchableOpacity onPress={aumentar2} style={styles.botao}>
+                            <Text style={styles.textoBotao}>+1</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={diminuir2} style={styles.botao}>
+                            <Text style={styles.textoBotao}>-1</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+            {/* Botão reset */}
+            <TouchableOpacity onPress={reset} style={styles.botaoReset}>
+                <Text style={styles.textoBotao}>Reset</Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
-
-  
-
-
-
-
-//area de estilos do app
+//Estilos do app
 const styles = StyleSheet.create({
-  //estilo da View principal do app
-  container: {
-    // ocupa toda a tela
-    flex: 1,
-    // cor de fundo
-    backgroundColor: '#c01616ff',
-    //centraliza horizontalmente
-    alignItems: 'center',
-    //centraliza verticalmente
-    justifyContent: 'center',
-    //espaçamento interno da View
-    padding: 20,
-  },
-//estilo do título do app
-  titulo: {
-    // tamanho da fonte
-    fontSize: 32,
-    // cor da fonte
-    color: '#00ff88',
-    // negrito
-    fontWeight: 'bold',
-    // espaçamento inferior
-    marginBottom: 30,
-  },
-//estilo do texto que mostra os pontos
-  pontos: {
-    // tamanho da fonte
-    fontSize: 80,
-    // cor da fonte
-    color: '#ffffff',
-    // espaçamento inferior
-    marginBottom: 40,
-    // negrito
-    fontWeight: 'bold',
-  },
-//estilo da área dos botões
-  areaBotoes: {
-    // organiza os botões em linha
-    flexDirection: 'row',
-  // espaçamento inferior  
-    marginBottom: 20,
-  },
-//estilo dos botões +1 e -1
-  button: {
-    // cor de fundo
-    backgroundColor: '#00ff88',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 30,
-    // bordas arredondadas
-    borderRadius: 12,
-    // espaçamento horizontal entre os botões
-    marginHorizontal: 10,
-  },
-//estilo do botão resetar
-  botao: {
-    // cor de fundo
-    backgroundColor: '#00ff88',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 30,
-    // bordas arredondadas
-    borderRadius: 12,
-    // espaçamento horizontal entre os botões
-    marginHorizontal: 10,
-  },
-//estilo do botão resetar
-  botaoReset: {
-    // cor de fundo
-    backgroundColor: '#ff3b30',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 40,
-    // bordas arredondadas
-    borderRadius: 12,
-  },
-//estilo do texto dos botões
-  textoBotao: {
-    // tamanho da fonte
-    fontSize: 15,
-    // cor da fonte
-    color: '#000',
-    // negrito
-    fontWeight: 'bold',
-  },
+    //Estilo da tela principal
+    container: {
+        //Ocupar toda a tela
+        flex: 1,
+        //Cor de fundo
+        backgroundColor: '#121212',
+        //Centralizar horizontalmente
+        alignItems: 'center',
+        //Centralizar verticalmente
+        justifyContent: 'center',
+        //Espaçamento interno
+        padding: 20
+    },
+    //Estilo do título
+    titulo: {
+        //Tamanho da fonte
+        fontSize: 32,
+        //Cor do texto
+        color: '#00ff88',
+        //Negrito
+        fontWeight: 'bold',
+        //Espaçamento abaixo
+        marginBottom: 20,
+    },
+    //Estilo dos pontos
+    pontos: {
+        //Tamanho da fonte
+        fontSize: 80,
+        //Cor do texto  
+        color: '#ffffff',
+        //Espaçamento abaixo
+        marginBottom: 40,
+        //Negrito
+        fontWeight: 'bold',
+    },
+    //Estilo da área dos botões
+    areaBotoes: {
+        //Organizar os botões em linha
+        flexDirection: 'row',
+        //Espaçamento abaixo
+        marginBottom: 20,
+    },
+    //Estilo dos botões
+    botao: {
+        //Cor de fundo
+        backgroundColor: '#00ff88',
+        //Espaçamento interno vertical
+        paddingVertical: 15,
+        //Espaçamento interno horizontal
+        paddingHorizontal: 30,
+        //Bordas arredondadas
+        borderRadius: 12,
+        //Espaçamento horizontal entre os botões
+        marginHorizontal: 10,
+    },
+    //Estilo do botão reset
+    botaoReset: {
+        //Cor de fundo
+        backgroundColor: '#ff3b30',
+        //Espaçamento interno vertical
+        paddingVertical: 15,
+        //Espaçamento interno horizontal
+        paddingHorizontal: 40,
+        //Bordas arredondadas
+        borderRadius: 12,
+    },
+    //Estilo do texto dos botões
+    textoBotao: {
+        //Tamanho da fonte
+        fontSize: 22,
+        //Cor do texto
+        color: '#000',
+        //Negrito
+        fontWeight: 'bold',
+    },
 
+    areaJogadores: {
+        flexDirection: 'row',
+        grap: 15
+    },
 
+    areaJogador: {
+        backgroundColor: '#1f1f1f',
+        width: 230,
+        padding: 15,
+        borderRadius: 15,
+        alignItems: 'center',
+    },
 
+    input: {
+        backgroundColor: '#fff',
+        width: '100%',
+        borderRadius: 10,
+        padding: 10,
+        fontSize: 16,
+    },
 
+    nome: {
+        fontSize: 20,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
 
-
-
-
-    numeros: {
-    // tamanho da fonte
-    fontSize: 80,
-    // cor da fonte
-    color: '#ffffff',
-    // espaçamento inferior
-    marginBottom: 40,
-    // negrito
-    fontWeight: 'bold',
-  },
-  numeros: {
-    // tamanho da fonte
-    fontSize: 80,
-    // cor da fonte
-    color: '#ffffff',
-    // espaçamento inferior
-    marginBottom: 40,
-    // negrito
-    fontWeight: 'bold',
-  },
-//estilo da área dos botões
-  areaBotoes2: {
-    // organiza os botões em linha
-    flexDirection: 'row',
-  // espaçamento inferior  
-    marginBottom: 20,
-  },
-//estilo dos botões +1 e -1
-  button2: {
-    // cor de fundo
-    backgroundColor: '#00ff88',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 30,
-    // bordas arredondadas
-    borderRadius: 12,
-    // espaçamento horizontal entre os botões
-    marginHorizontal: 10,
-  },
-//estilo do botão resetar
-  botao2: {
-    // cor de fundo
-    backgroundColor: '#00ff88',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 30,
-    // bordas arredondadas
-    borderRadius: 12,
-    // espaçamento horizontal entre os botões
-    marginHorizontal: 15,
-  },
-//estilo do botão resetar
-  botaoReset2: {
-    
-    // cor de fundo
-    backgroundColor: '#ff3b30',
-    // espaçamento interno vertical
-    paddingVertical: 15,
-    // espaçamento interno horizontal
-    paddingHorizontal: 40,
-    // bordas arredondadas
-    borderRadius: 12,
-  },
-//estilo do texto dos botões
-  textoBotao2: {
-    // tamanho da fonte
-    fontSize: 15,
-    // cor da fonte
-    color: '#000',
-    // negrito
-    fontWeight: 'bold',
-  },
-  
+    lider: {
+        fontSize: 22,
+        color: '#fff',
+        marginBottom: 20,
+        fontWeight: 'bold',
+    }
 });
